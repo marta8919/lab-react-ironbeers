@@ -11,3 +11,68 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.header {
+  background-color: rgb(58, 144, 224);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+input {
+  margin: 20px;
+  border-radius: 20px;
+  padding: 10px;
+  width: 100%;
+  border-color: rgb(201, 197, 197);
+}
+
+label {
+  margin: 25px;
+  font-weight: 800;
+}
+
+button {
+  width: 100%;
+}
+
+.myContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.myCard {
+  max-width: 300px;
+  min-width: 300px;
+  max-height: 300px;
+  min-height: 300px;
+  margin: 30px;
+}
+
+.myCard img {
+  height: 100px;
+  width: auto;
+}
+
+.beers {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.beerImg {
+  height: 300px;
+  width: auto;
+  margin: 15px;
+}
+
+.secondaryInfo {
+  display: flex;
+  justify-content: space-between;
+}
