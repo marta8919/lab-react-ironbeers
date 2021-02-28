@@ -16,7 +16,7 @@ export default class Beers extends Component {
     }
 
     componentDidMount(){
-        console.log("Component Mount")
+        console.log("Component Mount Beer")
         axios.get(`https://ih-beers-api2.herokuapp.com/beers`)
          .then((response)=>{
             this.setState({
@@ -31,12 +31,17 @@ export default class Beers extends Component {
 
     render() {
 
+        const {onSearch} = this.props
+
+
 
         console.log("Component Render")
 
         return (
             <div>
                 <Header/>
+
+                <input placeholder="Search for a beer" onChange={onSearch} />
 
                 <div className="beers">
 

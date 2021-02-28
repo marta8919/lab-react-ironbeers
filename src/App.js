@@ -14,21 +14,22 @@ class App extends Component {
 
   state = {
     beers: [],
+    filteredBeers : []
   }
 
-  componentDidMount(){
-      console.log("Component Mount")
-      axios.get(`https://ih-beers-api2.herokuapp.com/beers`)
-      .then((response)=>{
-          this.setState({
-              beers: response.data,
-          })
-      })
-      .catch(()=>{
-          console.log("Error moutning")
-      })
+  // componentDidMount(){
+  //     console.log("Component Mount on App.js")
+  //     axios.get(`https://ih-beers-api2.herokuapp.com/beers`)
+  //     .then((response)=>{
+  //         this.setState({
+  //             beers: response.data,
+  //         })
+  //     })
+  //     .catch(()=>{
+  //         console.log("Error moutning")
+  //     })
 
-  }
+  // }
 
   handleSubmit=(event)=>{
     event.preventDefault()
@@ -45,8 +46,9 @@ class App extends Component {
 
     axios.post('https://ih-beers-api2.herokuapp.com/beers/new', newBeer)
      .then((response)=>{
+       console.log(response.data)
        this.setState({
-         beers: [response.data,...this.state.beers]
+         beers: [...this.state.beers]//pk si quito response.data funciona???
        }, ()=>{
          this.props.history.push('/')
        })
@@ -54,6 +56,19 @@ class App extends Component {
      .catch(()=>{
        console.log("Error on form")
      })
+
+     console.log(this.state.beers)
+  }
+
+  handleSearch=(event)=>{
+    let filteredBeers = this.state.beers.filter(beer => {
+      return beer.name.toLowerCase().includes(event.target.value.toLowerCase())
+    })
+
+    this.setState({
+      beers : filteredBeers
+    })
+
   }
 
   render() {
@@ -61,7 +76,9 @@ class App extends Component {
      <div>
        <Switch>
           <Route exact path="/" component={Home}/>
-          <Route exact path="/beers" component={Beers}/>
+          <Route exact path="/beers" render={()=>{
+            return <Beers onSearch={this.handleSearch}/>
+          }} />
           <Route exact path="/beers/:beerid" render={(routeProps)=>{
             return <BeerDetail {...routeProps}/>
           }}/>

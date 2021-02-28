@@ -22,6 +22,11 @@ export default class RandomBeer extends Component {
          })
     }
 
+    componentWillUnmount(){
+        console.log("Random Beers Unmouted")
+    }
+
+
     render() {
         const {beers} = this.state
 
