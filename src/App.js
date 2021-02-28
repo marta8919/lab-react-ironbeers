@@ -13,23 +13,22 @@ import axios from 'axios'
 class App extends Component {
 
   state = {
-    beers: [],
-    filteredBeers : []
+    beers: []
   }
 
-  // componentDidMount(){
-  //     console.log("Component Mount on App.js")
-  //     axios.get(`https://ih-beers-api2.herokuapp.com/beers`)
-  //     .then((response)=>{
-  //         this.setState({
-  //             beers: response.data,
-  //         })
-  //     })
-  //     .catch(()=>{
-  //         console.log("Error moutning")
-  //     })
+  componentDidMount(){
+      console.log("Component Mount on App.js")
+      axios.get(`https://ih-beers-api2.herokuapp.com/beers`)
+      .then((response)=>{
+          this.setState({
+              beers: response.data,
+          })
+      })
+      .catch(()=>{
+          console.log("Error moutning")
+      })
 
-  // }
+  }
 
   handleSubmit=(event)=>{
     event.preventDefault()
@@ -46,9 +45,8 @@ class App extends Component {
 
     axios.post('https://ih-beers-api2.herokuapp.com/beers/new', newBeer)
      .then((response)=>{
-       console.log(response.data)
        this.setState({
-         beers: [...this.state.beers]//pk si quito response.data funciona???
+         beers: [response.data,...this.state.beers]
        }, ()=>{
          this.props.history.push('/')
        })
@@ -60,24 +58,29 @@ class App extends Component {
      console.log(this.state.beers)
   }
 
-  handleSearch=(event)=>{
-    let filteredBeers = this.state.beers.filter(beer => {
-      return beer.name.toLowerCase().includes(event.target.value.toLowerCase())
-    })
+  handleSearch = (event) => {
+    let query = event.target.value.toLowerCase()
+    console.log(query)
 
-    this.setState({
-      beers : filteredBeers
+    axios.get(`https://ih-beers-api2.herokuapp.com/beers/search?q=${query}`)
+    .then((response) => {
+        this.setState({
+          beers: response.data,
+        })
     })
-
-  }
+    .catch(() => console.log("error searching"))
+}
 
   render() {
+
+    const {beers, filteredBeers} = this.state
+
     return (
      <div>
        <Switch>
           <Route exact path="/" component={Home}/>
           <Route exact path="/beers" render={()=>{
-            return <Beers onSearch={this.handleSearch}/>
+            return <Beers onSearch={this.handleSearch} beers={beers} filteredBeers={filteredBeers}/>
           }} />
           <Route exact path="/beers/:beerid" render={(routeProps)=>{
             return <BeerDetail {...routeProps}/>

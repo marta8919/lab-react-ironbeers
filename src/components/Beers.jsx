@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Header from './Header'
-import axios from 'axios'
+// import axios from 'axios'
 import {Link} from  'react-router-dom'
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -11,31 +11,29 @@ import Typography from '@material-ui/core/Typography';
 
 export default class Beers extends Component {
 
-    state = {
-        beers: []
-    }
+    // state = {
+    //     beers: []
+    // }
 
-    componentDidMount(){
-        console.log("Component Mount Beer")
-        axios.get(`https://ih-beers-api2.herokuapp.com/beers`)
-         .then((response)=>{
-            this.setState({
-                beers: response.data
-            })
-         })
-         .catch(()=>{
-             console.log("Error moutning")
-         })
+    // componentDidMount(){
+    //     console.log("Component Mount Beer")
+    //     axios.get(`https://ih-beers-api2.herokuapp.com/beers`)
+    //      .then((response)=>{
+    //         this.setState({
+    //             beers: response.data
+    //         })
+    //      })
+    //      .catch(()=>{
+    //          console.log("Error moutning")
+    //      })
 
-    }
+    // }
 
     render() {
 
-        const {onSearch} = this.props
+        const {onSearch, beers} = this.props
 
-
-
-        console.log("Component Render")
+        // console.log("Component Render")
 
         return (
             <div>
@@ -47,7 +45,7 @@ export default class Beers extends Component {
 
                 
                 {
-                    this.state.beers.map((singleBeer)=>{
+                    beers.map((singleBeer)=>{
                         return (
                             <Link to={`/beers/${singleBeer._id}`} key={singleBeer._id}>
                                 <Card className="myCard">
